@@ -6,13 +6,15 @@ export type Resource = fhirclient.FHIR.Resource;
 export type Bundle = fhirclient.FHIR.Bundle;
 export type Patient = fhirclient.FHIR.Patient;
 
-export async function openOauthSignIn(): Promise<string | void> {
+export async function openOauthSignIn(local: boolean): Promise<string | void> {
   return fhir.oauth2.authorize({
     iss: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/",
     client_id: "1aea8201-9c37-4258-b682-b13f4d62c536",
     scope:
       "patient/Patient.read patient/Condition.read patient/AllergyIntolerance.read patient/launch",
-    redirect_uri: "http://localhost:3000/callback",
+    redirect_uri: local
+      ? "http://localhost:3000/callback"
+      : "https://epic-ehr-demo.netlify.app/callback",
   });
 }
 

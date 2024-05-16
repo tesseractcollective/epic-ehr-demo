@@ -41,7 +41,8 @@ export default function Home() {
 
   const signIn = async () => {
     setIsSigningIn(true);
-    await openOauthSignIn();
+    const isLocal = window.location.hostname.includes("localhost");
+    await openOauthSignIn(isLocal);
   };
 
   const onSubmit = async (data: FormInput) => {
